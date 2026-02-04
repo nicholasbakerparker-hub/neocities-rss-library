@@ -125,17 +125,23 @@ def load_all_jsonl(path):
     return sorted(items, key=lambda x: x.get("date_utc", ""), reverse=True)
 
 def render_page(title, items, out_path, gen_time):
+    # Decide which CSS to use based on page title
+    css_file = "css/films.css" if title.lower() == "films" else "css/books.css"
+
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(f"""<!doctype html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>{title} • Nick’s Library</title>
+  <link rel="stylesheet" href="{css_file}">
 </head>
 <body>
+  <a href="index.html" class="back-home-btn">← Back to Home</a>
   <h1>{title}</h1>
   <p>Generated {gen_time}</p>
 """)
+
         for it in items:
             stars = it.get("rating_stars") or ""
             review = it.get("review_html") or ""
@@ -147,14 +153,15 @@ def render_page(title, items, out_path, gen_time):
                 f.write(f'<h2><a href="{link}">{title_text}</a></h2>\n')
             else:
                 f.write(f'<h2>{title_text}</h2>\n')
+
             if stars:
                 f.write(f'<p class="rating">{stars}</p>\n')
             if review:
                 f.write(f'<p class="review">{review}</p>\n')
+
             f.write("</div>\n<hr>\n")
 
-        f.write("</body></html>")
-
+        f.write("</body>\n</html>")
 def main():
     ensure_dirs()
     seen_films = load_ids(FILMS_JSONL)
