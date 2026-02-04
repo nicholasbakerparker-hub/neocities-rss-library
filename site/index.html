@@ -1,78 +1,66 @@
- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nickell Library - News Montage</title>
-  <!-- Custom Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wdth,wght@75,700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+  <title>Nick’s Library (Y2K Portal)</title>
 
-  <!-- Main Styles -->
-  <link rel="stylesheet" href="css/homepage.css">
-
-  <!-- Diary Pen Cursor -->
+  <!-- Custom Cursor -->
   <style>
-    body, a {
-      cursor: url('assets/cursors/diary-pen.cur'), auto;
-    }
+    body, a { cursor: url("assets/pen-cursor.png"), auto; }
   </style>
+
+  <!-- Y2K Style -->
+  <link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
-  <div class="montage-container">
 
-    <!-- Big Headline -->
-    <div class="headline">
-      <h1>⚡️ NICKEll NEWSFLASH ⚡️</h1>
-      <p class="subtitle">The Only Library Worth Entering</p>
-    </div>
-
-    <!-- Navigation**
-    <div class="nav">
-      <a href="films.html" class="btn big">🎬 FILMS ARCHIVE</a>
-      <a href="books.html" class="btn big">📚 BOOKS ARCHIVE</a>
-    </div>
-
-    <!-- Widgets for Latest Items -->
-    <div class="widgets">
-      <div class="widget">
-        <h2>🎥 Latest Movie Watched</h2>
-        <div id="latest-movie">Loading…</div>
-      </div>
-      <div class="widget">
-        <h2>📖 Latest Book Finished</h2>
-        <div id="latest-book">Loading…</div>
-      </div>
-    </div>
-
-    <!-- Decorative newspaper clippings -->
-    <div class="clippings">
-      <div class="clip clip-1"></div>
-      <div class="clip clip-2"></div>
-      <div class="clip clip-3"></div>
-    </div>
-
+  <!-- Big Animated Header -->
+  <div class="header">
+    <img src="assets/y2k-header.gif" alt="Y2K Portal Header" class="biggif">
   </div>
 
-  <!-- Script to inject latest content pulled from your generated pages -->
+  <!-- Navigation with GIF Icons -->
+  <div class="nav">
+    <a href="films.html" class="y2kbtn">
+      <img src="assets/film-icon.gif" alt="🎬">
+      FILMS ARCHIVE
+    </a>
+    <a href="books.html" class="y2kbtn">
+      <img src="assets/book-icon.gif" alt="📚">
+      BOOKS ARCHIVE
+    </a>
+  </div>
+
+  <!-- “Recently…” Widgets -->
+  <div class="widgets">
+    <div class="widget movie">
+      <h2>Most Recent Movie</h2>
+      <div id="latestmovie">Loading…</div>
+    </div>
+    <div class="widget book">
+      <h2>Most Recent Book</h2>
+      <div id="latestbook">Loading…</div>
+    </div>
+  </div>
+
+  <!-- Optional Extra GIF Collage -->
+  <div class="collage">
+    <img src="assets/extra1.gif" alt="" class="clip">
+    <img src="assets/extra2.gif" alt="" class="clip">
+    <img src="assets/extra3.gif" alt="" class="clip">
+  </div>
+
   <script>
     async function fetchLatest(type) {
       try {
-        const url = type === 'movie' ? 'films.html' : 'books.html';
-        const resp = await fetch(url);
-        const text = await resp.text();
-
-        // grab first entry (simple pattern)
-        const match = text.match(/<h2><a[^>]*>(.*?)<\\/a><\\/h2>/);
-        return match ? match[1] : 'No recent entry';
-      } catch {
-        return 'Unavailable';
-      }
+        const html = await (await fetch(type==="movie"?"films.html":"books.html")).text();
+        const m = html.match(/<h2><a[^>]*>(.*?)<\/a><\/h2>/);
+        return m ? m[1] : "None yet";
+      } catch {return "Unavailable";}
     }
-
-    (async function() {
-      document.getElementById('latest-movie').textContent = await fetchLatest('movie');
-      document.getElementById('latest-book').textContent = await fetchLatest('book');
+    (async()=>{
+      document.getElementById("latestmovie").textContent = await fetchLatest("movie");
+      document.getElementById("latestbook").textContent = await fetchLatest("book");
     })();
   </script>
 
