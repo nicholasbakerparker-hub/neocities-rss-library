@@ -1,0 +1,52 @@
+/* Books Page: Global Village Aesthetic */
+body {
+  background: #faf3e8;
+  color: #333;
+  font-family: "Merriweather", serif;
+  padding: 24px;
+}
+
+h1 {
+  font-size: 2.4em;
+  font-style: italic;
+  color: #6b4c3b;
+  margin-bottom: 18px;
+}
+
+a.back-home-btn {
+  display: inline-block;
+  margin-bottom: 22px;
+  padding: 8px 14px;
+  background: #5b3a29;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.entry {
+  background: #fff9f2;
+  margin: 18px auto;
+  padding: 16px 20px;
+  max-width: 780px;
+  border-left: 4px solid #8b5e3c;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+}
+
+.entry h2 {
+  font-size: 1.6em;
+  color: #5b3a29;
+  margin-bottom: 8px;
+}
+
+.rating {
+  font-size: 1.2em;
+  color: #8b5e3c;
+}
+
+.review {
+  font-size: 1.1em;
+  color: #444;
+  margin-top: 8px;
+  line-height: 1.5;
+}
