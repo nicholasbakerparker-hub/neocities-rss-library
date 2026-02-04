@@ -1,4 +1,6 @@
-import os, json, re
+import os
+import json
+import re
 from datetime import datetime, timezone
 import feedparser
 from dateutil import parser as dtp
@@ -27,7 +29,7 @@ def load_ids(path):
                 obj = json.loads(line)
                 ids.add(obj["id"])
             except:
-                continue
+                pass
     return ids
 
 def append_jsonl(path, items):
@@ -69,7 +71,10 @@ def normalize_letterboxd(feed_url):
         rating = None
         m = re.search(r"(★+½?)", title)
         if m:
-            rating = stars_to_5(m.group(1))
+            try:
+                rating = stars_to_5(m.group(1))
+            except:
+                rating = None
 
         out.append({
             "id": f"letterboxd:{guid}",
@@ -93,7 +98,10 @@ def normalize_goodreads(feed_url):
         rating = None
         m = re.search(r"rating:\s*([0-5])", summary, re.IGNORECASE)
         if m:
-            rating = int(m.group(1))
+            try:
+                rating = int(m.group(1))
+            except:
+                rating = None
 
         out.append({
             "id": f"goodreads:{guid}",
@@ -114,18 +122,37 @@ def load_all_jsonl(path):
                     items.append(json.loads(line))
                 except:
                     pass
-    return sorted(items, key=lambda x: x.get("date_utc",""), reverse=True)
+    return sorted(items, key=lambda x: x.get("date_utc", ""), reverse=True)
 
 def render_page(title, items, out_path, gen_time):
     with open(out_path, "w", encoding="utf-8") as f:
-        f.write(f"<html><body><h1>{title}</h1><p>Generated {gen_time}</p>")
+        f.write(f"""<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{title} • Nick’s Library</title>
+</head>
+<body>
+  <h1>{title}</h1>
+  <p>Generated {gen_time}</p>
+""")
         for it in items:
-            f.write(f"<div><h2>{it['title']}</h2>")
-            if it.get("rating_stars"):
-                f.write(f"<p>{it['rating_stars']}</p>")
-            if it.get("review_html"):
-                f.write(f"<p>{it['review_html']}</p>")
-            f.write("</div><hr>")
+            stars = it.get("rating_stars") or ""
+            review = it.get("review_html") or ""
+            title_text = it.get("title") or ""
+            link = it.get("link") or ""
+
+            f.write('<div class="entry">\n')
+            if link:
+                f.write(f'<h2><a href="{link}">{title_text}</a></h2>\n')
+            else:
+                f.write(f'<h2>{title_text}</h2>\n')
+            if stars:
+                f.write(f'<p class="rating">{stars}</p>\n')
+            if review:
+                f.write(f'<p class="review">{review}</p>\n')
+            f.write("</div>\n<hr>\n")
+
         f.write("</body></html>")
 
 def main():
