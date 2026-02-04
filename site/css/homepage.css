@@ -1,0 +1,75 @@
+body {
+  background: black;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: #00ffea;
+  text-align: center;
+}
+
+.biggif {
+  width: 90%;
+  max-width: 960px;
+  margin: 20px auto;
+  border: 5px dotted #ff00ff;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin: 30px;
+}
+
+.y2kbtn {
+  background: #ff00ff;
+  border: 3px solid cyan;
+  padding: 18px;
+  font-size: 1.8rem;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  animation: neonGlow 1.5s infinite alternate;
+}
+
+.y2kbtn img {
+  width: 48px;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+@keyframes neonGlow {
+  to { text-shadow: 0 0 20px #0ff, 0 0 30px #f0f; }
+}
+
+.widgets {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.widget {
+  background: #050505;
+  border: 4px dashed #0ff;
+  padding: 22px;
+  width: 280px;
+  font-size: 1.2rem;
+}
+
+.widget.movie { border-color: #00f; }
+.widget.book { border-color: #f0f; }
+
+.collage {
+  position: relative;
+  margin-top: 40px;
+}
+
+.clip {
+  width: 120px;
+  margin: 10px;
+  animation: floatAround 6s infinite alternate ease-in-out;
+}
+
+@keyframes floatAround {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to { transform: translate(20px, 20px) rotate(15deg); }
+}
