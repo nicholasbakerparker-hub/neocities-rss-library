@@ -73,3 +73,23 @@ body {
   from { transform: translate(0, 0) rotate(0deg); }
   to { transform: translate(20px, 20px) rotate(15deg); }
 }
+/* GeoCities Retro GIF top left */
+.geo-gif-top-left {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+}
+
+.geo-gif-top-left img {
+  width: 120px;   /* adjust if you want it bigger or smaller */
+  height: auto;
+  border: 2px solid #ff69b4;  /* neon frame vibe */
+  box-shadow: 0 0 10px #ff69b4, 0 0 15px #00eaff;
+  animation: pulseY2K 2s infinite alternate ease-in-out;
+}
+
+@keyframes pulseY2K {
+  from { transform: scale(1) rotate(-1deg); }
+  to   { transform: scale(1.08) rotate(1deg); }
+}
