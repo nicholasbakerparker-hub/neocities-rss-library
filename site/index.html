@@ -1,14 +1,80 @@
-<!doctype html>
-<html>
+ <!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Nick’s Library</title>
+  <meta charset="UTF-8">
+  <title>Nickell Library - News Montage</title>
+  <!-- Custom Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wdth,wght@75,700&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="css/homepage.css">
+
+  <!-- Diary Pen Cursor -->
+  <style>
+    body, a {
+      cursor: url('assets/cursors/diary-pen.cur'), auto;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Nick’s Library</h1>
-  <ul>
-    <li><a href="films.html">Films</a></li>
-    <li><a href="books.html">Books</a></li>
-  </ul>
+  <div class="montage-container">
+
+    <!-- Big Headline -->
+    <div class="headline">
+      <h1>⚡️ NICKEll NEWSFLASH ⚡️</h1>
+      <p class="subtitle">The Only Library Worth Entering</p>
+    </div>
+
+    <!-- Navigation**
+    <div class="nav">
+      <a href="films.html" class="btn big">🎬 FILMS ARCHIVE</a>
+      <a href="books.html" class="btn big">📚 BOOKS ARCHIVE</a>
+    </div>
+
+    <!-- Widgets for Latest Items -->
+    <div class="widgets">
+      <div class="widget">
+        <h2>🎥 Latest Movie Watched</h2>
+        <div id="latest-movie">Loading…</div>
+      </div>
+      <div class="widget">
+        <h2>📖 Latest Book Finished</h2>
+        <div id="latest-book">Loading…</div>
+      </div>
+    </div>
+
+    <!-- Decorative newspaper clippings -->
+    <div class="clippings">
+      <div class="clip clip-1"></div>
+      <div class="clip clip-2"></div>
+      <div class="clip clip-3"></div>
+    </div>
+
+  </div>
+
+  <!-- Script to inject latest content pulled from your generated pages -->
+  <script>
+    async function fetchLatest(type) {
+      try {
+        const url = type === 'movie' ? 'films.html' : 'books.html';
+        const resp = await fetch(url);
+        const text = await resp.text();
+
+        // grab first entry (simple pattern)
+        const match = text.match(/<h2><a[^>]*>(.*?)<\\/a><\\/h2>/);
+        return match ? match[1] : 'No recent entry';
+      } catch {
+        return 'Unavailable';
+      }
+    }
+
+    (async function() {
+      document.getElementById('latest-movie').textContent = await fetchLatest('movie');
+      document.getElementById('latest-book').textContent = await fetchLatest('book');
+    })();
+  </script>
+
 </body>
 </html>
